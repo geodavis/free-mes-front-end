@@ -7,30 +7,30 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list nav dense>
-        <v-list-item-group
-          v-model="group"
-          active-class="primary--text text--accent-4"
+      <v-list>
+        <v-list-group
+          v-for="item in items"
+          :key="item.title"
+          v-model="item.active"
+          :prepend-icon="item.action"
+          no-action
         >
-          <v-list-item to="/">
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title"></v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item
+            v-for="child in item.items"
+            :key="child.title"
+            :to="child.to"
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="child.title"></v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
-          <v-list-item to="/create-part">
-            <v-list-item-icon>
-              <v-icon>mdi-wrench</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Create Part</v-list-item-title>
-          </v-list-item>
-          <v-list-item to="/search-part">
-            <v-list-item-icon>
-              <v-icon>mdi-table-search</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Search Part</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
     <v-main>
@@ -50,6 +50,32 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
+    items: [
+      {
+        action: "mdi-home",
+        to: "/",
+        title: "Home",
+      },
+      {
+        action: "mdi-wrench",
+        active: true,
+        items: [
+          { title: "Create Part", to: "/create-part" },
+          { title: "Edit Part" },
+          { title: "Search Part", to: "/search-part" },
+        ],
+        title: "Parts",
+      },
+      {
+        action: "mdi-school",
+        items: [
+          { title: "Create Lot" },
+          { title: "Edit Lot" },
+          { title: "Search Lot" },
+        ],
+        title: "Lots",
+      },
+    ],
   }),
 };
 </script>
