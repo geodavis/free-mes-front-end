@@ -8,6 +8,12 @@
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list>
+        <v-list-item color="primary" to="/">
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
         <v-list-group
           v-for="item in items"
           :key="item.title"
@@ -20,7 +26,7 @@
               <v-list-item-title v-text="item.title"></v-list-item-title>
             </v-list-item-content>
           </template>
-
+          
           <v-list-item
             v-for="child in item.items"
             :key="child.title"
@@ -51,11 +57,6 @@ export default {
     drawer: false,
     group: null,
     items: [
-      {
-        action: "mdi-home",
-        to: "/",
-        title: "Home",
-      },
       {
         action: "mdi-wrench",
         active: true,
